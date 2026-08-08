@@ -5,6 +5,7 @@ import { getEmployees } from "../../services/employeeService";
 import { getDepartments } from "../../services/departmentService";
 import { useNavigate } from "react-router-dom";
 
+
 function EmployeeList() {
 
     const [employees, setEmployees] = useState([]);
@@ -72,174 +73,218 @@ function EmployeeList() {
 
             <div className="d-flex justify-content-between align-items-center mb-4">
 
-                <h2>
+    <div>
 
-                    Employees
+        <h2 className="fw-bold mb-1">
 
-                </h2>
+            Employees
 
-                <button className="btn btn-primary" onClick={() => navigate("/employees/create")}>
+        </h2>
 
-                    + Add Employee
+        <p className="text-muted mb-0">
 
-                </button>
+            Manage all employees in your organization.
+
+        </p>
+
+    </div>
+
+    <button
+        className="btn btn-primary px-4 py-3"
+        onClick={() => navigate("/employees/create")}
+    >
+
+        + Add Employee
+
+    </button>
+
+</div>
+
+<div className="card border-0 shadow-sm rounded-4 mb-4">
+
+    <div className="card-body">
+
+        <div className="row g-3">
+
+            <div className="col-xl-4 col-lg-6 col-md-12">
+
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="🔍 Search employee..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
 
             </div>
 
-            <div className="row mb-4">
+            <div className="col-xl-2 col-lg-6 col-md-6">
 
-                <div className="col-md-4">
+                <select
+                    className="form-select"
+                    value={department}
+                    onChange={(e)=>setDepartment(e.target.value)}
+                >
 
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Search employee..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <option value="">
 
-                </div>
+                        All Departments
 
-                <div className="col-md-3">
-
-                    <select
-                className="form-select h-100"
-                value={department}
-                onChange={(e) => setDepartment(e.target.value)}
-            >
-
-                <option value="">
-                    All Departments
-                </option>
-
-                {departments.map((dept) => (
-
-                    <option
-                        key={dept.id}
-                        value={dept.id}
-                    >
-                        {dept.name}
                     </option>
 
-                ))}
-
-            </select>
-
-                </div>
-
-                <div className="col-md-3">
-
-                    <select
-                        className="form-select h-100"
-                        value={status}
-                        onChange={(e) => setStatus(e.target.value)}
-                    >
-
-                        <option value="">
-                            All Status
+                    {departments.map((dept)=>(
+                        <option
+                            key={dept.id}
+                            value={dept.id}
+                        >
+                            {dept.name}
                         </option>
+                    ))}
 
-                        <option value="true">
-                            Active
-                        </option>
-
-                        <option value="false">
-                            Inactive
-                        </option>
-
-                    </select>
-
-                </div>
-
-                <div className="col-md-2">
-
-                    <select
-                        className="form-select h-100"
-                        value={ordering}
-                        onChange={(e) => setOrdering(e.target.value)}
-                    >
-
-                        <option value="">
-                            Sort By
-                        </option>
-
-                        <option value="full_name">
-                            Name (A-Z)
-                        </option>
-
-                        <option value="-full_name">
-                            Name (Z-A)
-                        </option>
-
-                        <option value="salary">
-                            Salary (Low-High)
-                        </option>
-
-                        <option value="-salary">
-                            Salary (High-Low)
-                        </option>
-
-                        <option value="joining_date">
-                            Oldest Joining
-                        </option>
-
-                        <option value="-joining_date">
-                            Newest Joining
-                        </option>
-
-                    </select>
-
-                </div>
+                </select>
 
             </div>
+
+            <div className="col-xl-2 col-lg-6 col-md-6">
+
+                <select
+                    className="form-select"
+                    value={status}
+                    onChange={(e)=>setStatus(e.target.value)}
+                >
+
+                    <option value="">All Status</option>
+                    <option value="true">Active</option>
+                    <option value="false">Inactive</option>
+
+                </select>
+
+            </div>
+
+            <div className="col-xl-2 col-lg-6 col-md-6">
+
+                <select
+                    className="form-select"
+                    value={ordering}
+                    onChange={(e)=>setOrdering(e.target.value)}
+                >
+
+                    <option value="-joining_date">
+
+                        Newest Joined
+
+                    </option>
+
+                    <option value="joining_date">
+
+                        Oldest Joined
+
+                    </option>
+
+                    <option value="salary">
+
+                        Salary Low → High
+
+                    </option>
+
+                    <option value="-salary">
+
+                        Salary High → Low
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div className="col-xl-2 col-lg-6 col-md-6">
+
+                <select
+                    className="form-select"
+                    value={pageSize}
+                    onChange={(e)=>{
+
+                        setPageSize(e.target.value);
+
+                        setPage(1);
+
+                    }}
+                >
+
+                    <option value="5">5 Rows</option>
+                    <option value="10">10 Rows</option>
+                    <option value="20">20 Rows</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
             
 
             <EmployeeTable employees={employees}  loadEmployees={loadEmployees} />
 
-            <div className="d-flex justify-content-between align-items-center mt-4">
+            <div className="d-flex flex-wrap justify-content-between align-items-center gap-3">
 
-                <button
-                    className="btn btn-outline-primary h-auto"
-                    disabled={!pagination.previous}
-                    onClick={() => setPage(page - 1)}
-                >
-                    Previous
-                </button>
+                <div className="text-muted">
 
-                <span>
-                    Page {page}
-                </span>
-                <div className="col-md-2">
+                    Showing
 
-                    <select
-                        className="form-select"
-                        value={pageSize}
-                        onChange={(e) => {
+                    <strong>
 
-                            setPage(1);
+                        {" "}
+                        {employees.length}
+                        {" "}
 
-                            setPageSize(e.target.value);
+                    </strong>
 
-                        }}>
+                    of
 
-                        <option value="5">5</option>
+                    <strong>
 
-                        <option value="10">10</option>
+                        {" "}
+                        {pagination.count}
+                        {" "}
 
-                        <option value="20">20</option>
+                    </strong>
 
-                        <option value="50">50</option>
-
-                    </select>
+                    employees
 
                 </div>
 
-                <button
-                    className="btn btn-outline-primary h-auto"
-                    disabled={!pagination.next}
-                    onClick={() => setPage(page + 1)}>
-                    Next
-                </button>
+                <div className="d-flex align-items-center gap-3">
+
+                    <button
+                        className="btn btn-outline-primary"
+                        disabled={!pagination.previous}
+                        onClick={() => setPage(page - 1)}
+                    >
+
+                        Previous
+
+                    </button>
+
+                    <span className="fw-semibold">
+
+                        Page {page}
+
+                    </span>
+
+                    <button
+                        className="btn btn-outline-primary"
+                        disabled={!pagination.next}
+                        onClick={() => setPage(page + 1)}
+                    >
+
+                        Next
+
+                    </button>
+
+                </div>
 
             </div>
 

@@ -1,11 +1,245 @@
-.employee-photo{
+.employee-table-wrapper{
 
-    width:55px;
+    background:#fff;
 
-    height:55px;
+    border-radius:16px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 25px rgba(15,23,42,.05);
+
+}
+
+.employee-table thead{
+
+    background:#f8fafc;
+
+}
+
+.employee-table thead th{
+
+    padding:18px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    color:#64748b;
+
+    border:none;
+
+}
+
+.employee-table tbody td{
+
+    padding:18px;
+
+    vertical-align:middle;
+
+}
+
+.employee-table tbody tr{
+
+    transition:.25s;
+
+}
+
+.employee-table tbody tr:hover{
+
+    background:#f8fbff;
+
+    transform:translateY(-2px);
+
+    box-shadow:0 6px 18px rgba(0,0,0,.05);
+
+}
+
+.employee-avatar{
+
+    width:60px;
+
+    height:60px;
+
+    object-fit:cover;
 
     border-radius:50%;
 
-    object-fit:cover;
+    border:3px solid #e5e7eb;
+
+}
+
+.employee-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.employee-info h6{
+
+    margin:0;
+
+    font-size:17px;
+
+    font-weight:700;
+
+}
+
+.status-badge{
+
+    padding:6px 14px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.status-badge.active{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+}
+
+.status-badge.inactive{
+
+    background:#fee2e2;
+
+    color:#dc2626;
+
+}
+
+.action-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:8px;
+
+}
+
+.action-buttons .btn{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:12px;
+
+    transition:.2s;
+
+}
+
+.action-buttons .btn:hover{
+
+    transform:scale(1.08);
+
+}
+
+.salary{
+
+    font-size:18px;
+
+    font-weight:700;
+
+}
+
+.salary small{
+
+    display:block;
+
+    color:#6c757d;
+
+    font-size:12px;
+
+}
+
+.empty-state{
+
+    background:#fff;
+
+    border-radius:16px;
+
+    padding:70px 20px;
+
+    text-align:center;
+
+    box-shadow:0 10px 25px rgba(15,23,42,.05);
+
+}
+
+.empty-icon{
+
+    font-size:60px;
+
+    margin-bottom:15px;
+
+}
+
+@media (max-width:991px){
+
+    .employee-table{
+
+        min-width:900px;
+
+    }
+
+}
+
+.employee-name{
+
+    min-width:180px;
+
+}
+
+.contact-info{
+
+    min-width:220px;
+
+}
+
+.salary{
+
+    min-width:120px;
+
+}
+
+.salary small{
+
+    white-space:nowrap;
+
+}
+
+.action-buttons{
+
+    display:flex;
+
+    gap:8px;
+
+}
+
+@media (max-width:1200px){
+
+.action-buttons{
+
+    flex-direction:column;
+
+}
 
 }

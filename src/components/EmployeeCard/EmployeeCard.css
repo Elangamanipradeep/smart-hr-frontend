@@ -1,0 +1,111 @@
+.employee-card{
+
+    background:#fff;
+
+    border-radius:16px;
+
+    padding:20px;
+
+    box-shadow:0 10px 25px rgba(15,23,42,.06);
+
+    margin-bottom:20px;
+
+}
+
+.employee-card-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:20px;
+
+}
+
+.employee-card-avatar{
+
+    width:70px;
+
+    height:70px;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    border:3px solid #e5e7eb;
+
+}
+
+.employee-card-header h5{
+
+    margin:0;
+
+    font-weight:700;
+
+}
+
+.employee-card-header small{
+
+    color:#6b7280;
+
+}
+
+.employee-card-body{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:16px;
+
+    margin-bottom:20px;
+
+}
+
+.employee-card-body p{
+
+    margin:0;
+
+    font-size:14px;
+
+}
+
+.employee-card-footer{
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+.employee-card-footer .btn{
+
+    flex:1;
+
+    border-radius:10px;
+
+}
+
+@media (max-width:576px){
+
+.employee-card-body{
+
+    grid-template-columns:1fr;
+
+}
+
+.employee-card-footer{
+
+    flex-direction:column;
+
+}
+
+.employee-card-footer .btn{
+
+    width:100%;
+
+}
+
+}

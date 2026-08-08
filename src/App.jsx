@@ -7,6 +7,7 @@ import EmployeeForm from "./pages/Employees/EmployeeForm";
 import DepartmentList from "./pages/Departments/DepartmentList";
 import DepartmentForm from "./pages/Departments/DepartmentForm";
 import Profile from "./pages/Profile/Profile";
+import EmployeeDetails from "./pages/Employees/EmployeeDetails";
 import NotFound from "./pages/NotFound/NotFound";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -88,6 +89,14 @@ function App() {
             <Profile />
         </ProtectedRoute>
     }
+/>
+
+        <Route
+
+    path="/employees/view/:id"
+
+    element={<EmployeeDetails />}
+
 />
 
         <Route path="*" element={<NotFound />} />
