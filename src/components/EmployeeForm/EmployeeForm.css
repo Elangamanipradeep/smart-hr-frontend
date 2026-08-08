@@ -1,0 +1,136 @@
+.employee-form-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:35px;
+
+    box-shadow:0 4px 20px rgba(0,0,0,.08);
+
+}
+
+.employee-form-card label{
+
+    font-weight:600;
+
+    margin-bottom:8px;
+
+}
+
+.employee-form-card .form-control,
+.employee-form-card .form-select{
+
+    height:48px;
+
+}
+
+.employee-form-card textarea{
+
+    resize:none;
+
+}
+
+.file-upload-box{
+
+    border:2px dashed #d6dce5;
+
+    border-radius:12px;
+
+    height:65px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 20px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    background:#fafbfd;
+
+}
+
+.file-upload-box:hover{
+
+    border-color:#0d6efd;
+
+    background:#f3f8ff;
+
+}
+
+.file-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.file-icon{
+
+    font-size:24px;
+
+}
+
+.file-name{
+
+    font-weight:500;
+
+    color:#495057;
+
+}
+
+.browse-btn{
+
+    background:#0d6efd;
+
+    color:#fff;
+
+    padding:8px 18px;
+
+    border-radius:8px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.photo-preview-card{
+
+    width:220px;
+
+    padding:20px;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:16px;
+
+    text-align:center;
+
+    background:white;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.05);
+
+}
+
+.employee-preview{
+
+    width:170px;
+
+    height:170px;
+
+    border-radius:14px;
+
+    object-fit:cover;
+
+    border:2px solid #e5e7eb;
+
+}
