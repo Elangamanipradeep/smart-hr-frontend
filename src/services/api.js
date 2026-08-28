@@ -1,11 +1,18 @@
 import axios from "axios";
 
+const API_URL = "http://127.0.0.1:8000/api/";
+
 const api = axios.create({
-    baseURL: "http://127.0.0.1:8000/api/",
+    baseURL: API_URL,
     headers: {
         "Content-Type": "application/json",
     },
 });
+
+
+// =========================================
+// Add access token to every request
+// =========================================
 
 api.interceptors.request.use(
 
@@ -14,7 +21,10 @@ api.interceptors.request.use(
         const token = localStorage.getItem("access_token");
 
         if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
+
+            config.headers.Authorization =
+                `Bearer ${token}`;
+
         }
 
         return config;
@@ -25,6 +35,11 @@ api.interceptors.request.use(
 
 );
 
+
+// =========================================
+// Handle expired access token
+// =========================================
+
 api.interceptors.response.use(
 
     (response) => response,
@@ -33,22 +48,56 @@ api.interceptors.response.use(
 
         const originalRequest = error.config;
 
-        if (
 
+        // =========================================
+        // Do NOT handle login 401 here
+        // Let Login.jsx handle it
+        // =========================================
+
+        if (
+            originalRequest?.url?.includes("accounts/login/")
+        ) {
+
+            return Promise.reject(error);
+
+        }
+
+
+        // =========================================
+        // Handle expired access token
+        // =========================================
+
+        if (
             error.response?.status === 401 &&
             !originalRequest._retry
-
         ) {
 
             originalRequest._retry = true;
 
-            try {
 
-                const refreshToken = localStorage.getItem("refresh_token");
+            const refreshToken =
+                localStorage.getItem("refresh_token");
+
+
+            // No refresh token
+            if (!refreshToken) {
+
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("refresh_token");
+                localStorage.removeItem("role");
+
+                window.location.href = "/";
+
+                return Promise.reject(error);
+
+            }
+
+
+            try {
 
                 const response = await axios.post(
 
-                    "http://127.0.0.1:8000/api/accounts/refresh/",
+                    `${API_URL}accounts/refresh/`,
 
                     {
                         refresh: refreshToken,
@@ -56,24 +105,31 @@ api.interceptors.response.use(
 
                 );
 
-                const newAccessToken = response.data.access;
+
+                const newAccessToken =
+                    response.data.access;
+
 
                 localStorage.setItem(
                     "access_token",
                     newAccessToken
                 );
 
+
                 originalRequest.headers.Authorization =
                     `Bearer ${newAccessToken}`;
+
 
                 return api(originalRequest);
 
             }
 
+
             catch (refreshError) {
 
                 localStorage.removeItem("access_token");
                 localStorage.removeItem("refresh_token");
+                localStorage.removeItem("role");
 
                 window.location.href = "/";
 
@@ -83,10 +139,12 @@ api.interceptors.response.use(
 
         }
 
+
         return Promise.reject(error);
 
     }
 
 );
+
 
 export default api;

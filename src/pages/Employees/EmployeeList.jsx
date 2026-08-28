@@ -5,6 +5,18 @@ import { getEmployees } from "../../services/employeeService";
 import { getDepartments } from "../../services/departmentService";
 import { useNavigate } from "react-router-dom";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import {
+    faPlus,
+    faMagnifyingGlass,
+    faFilter,
+    faChevronLeft,
+    faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
+
+import "./EmployeeList.css";
+
 
 function EmployeeList() {
 
@@ -17,6 +29,8 @@ function EmployeeList() {
     const [department, setDepartment] = useState("");
     const [status, setStatus] = useState("");
     const [ordering, setOrdering] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     const navigate = useNavigate();
 
@@ -32,9 +46,19 @@ function EmployeeList() {
 
     const loadEmployees = async () => {
 
+        setLoading(true);
+        setError(false);
+
         try {
 
-            const response = await getEmployees(page, pageSize, search, department, status, ordering);
+            const response = await getEmployees(
+                page,
+                pageSize,
+                search,
+                department,
+                status,
+                ordering
+            );
 
             setEmployees(response.results);
             setPagination(response);
@@ -44,6 +68,14 @@ function EmployeeList() {
         catch (error) {
 
             console.log(error);
+
+            setError(true);
+
+        }
+
+        finally {
+
+            setLoading(false);
 
         }
 
@@ -71,222 +103,271 @@ function EmployeeList() {
 
         <DashboardLayout>
 
-            <div className="d-flex justify-content-between align-items-center mb-4">
+            <div className="employee-page-header justify-content-end">
 
-    <div>
+                
 
-        <h2 className="fw-bold mb-1">
 
-            Employees
-
-        </h2>
-
-        <p className="text-muted mb-0">
-
-            Manage all employees in your organization.
-
-        </p>
-
-    </div>
-
-    <button
-        className="btn btn-primary px-4 py-3"
-        onClick={() => navigate("/employees/create")}
-    >
-
-        + Add Employee
-
-    </button>
-
-</div>
-
-<div className="card border-0 shadow-sm rounded-4 mb-4">
-
-    <div className="card-body">
-
-        <div className="row g-3">
-
-            <div className="col-xl-4 col-lg-6 col-md-12">
-
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="🔍 Search employee..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
-
-            </div>
-
-            <div className="col-xl-2 col-lg-6 col-md-6">
-
-                <select
-                    className="form-select"
-                    value={department}
-                    onChange={(e)=>setDepartment(e.target.value)}
+                <button
+                    className="add-employee-btn"
+                    onClick={() => navigate("/employees/create")}
                 >
 
-                    <option value="">
+                    <FontAwesomeIcon icon={faPlus} />
 
-                        All Departments
-
-                    </option>
-
-                    {departments.map((dept)=>(
-                        <option
-                            key={dept.id}
-                            value={dept.id}
-                        >
-                            {dept.name}
-                        </option>
-                    ))}
-
-                </select>
-
-            </div>
-
-            <div className="col-xl-2 col-lg-6 col-md-6">
-
-                <select
-                    className="form-select"
-                    value={status}
-                    onChange={(e)=>setStatus(e.target.value)}
-                >
-
-                    <option value="">All Status</option>
-                    <option value="true">Active</option>
-                    <option value="false">Inactive</option>
-
-                </select>
-
-            </div>
-
-            <div className="col-xl-2 col-lg-6 col-md-6">
-
-                <select
-                    className="form-select"
-                    value={ordering}
-                    onChange={(e)=>setOrdering(e.target.value)}
-                >
-
-                    <option value="-joining_date">
-
-                        Newest Joined
-
-                    </option>
-
-                    <option value="joining_date">
-
-                        Oldest Joined
-
-                    </option>
-
-                    <option value="salary">
-
-                        Salary Low → High
-
-                    </option>
-
-                    <option value="-salary">
-
-                        Salary High → Low
-
-                    </option>
-
-                </select>
-
-            </div>
-
-            <div className="col-xl-2 col-lg-6 col-md-6">
-
-                <select
-                    className="form-select"
-                    value={pageSize}
-                    onChange={(e)=>{
-
-                        setPageSize(e.target.value);
-
-                        setPage(1);
-
-                    }}
-                >
-
-                    <option value="5">5 Rows</option>
-                    <option value="10">10 Rows</option>
-                    <option value="20">20 Rows</option>
-
-                </select>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-            
-
-            <EmployeeTable employees={employees}  loadEmployees={loadEmployees} />
-
-            <div className="d-flex flex-wrap justify-content-between align-items-center gap-3">
-
-                <div className="text-muted">
-
-                    Showing
-
-                    <strong>
-
-                        {" "}
-                        {employees.length}
-                        {" "}
-
-                    </strong>
-
-                    of
-
-                    <strong>
-
-                        {" "}
-                        {pagination.count}
-                        {" "}
-
-                    </strong>
-
-                    employees
-
-                </div>
-
-                <div className="d-flex align-items-center gap-3">
-
-                    <button
-                        className="btn btn-outline-primary"
-                        disabled={!pagination.previous}
-                        onClick={() => setPage(page - 1)}
-                    >
-
-                        Previous
-
-                    </button>
-
-                    <span className="fw-semibold">
-
-                        Page {page}
-
+                    <span>
+                        Add Employee
                     </span>
 
-                    <button
-                        className="btn btn-outline-primary"
-                        disabled={!pagination.next}
-                        onClick={() => setPage(page + 1)}
+                </button>
+
+            </div>
+
+            <div className="employee-filter-panel">
+
+                <div className="employee-filter-header">
+
+                    <div className="filter-title">
+
+                        <FontAwesomeIcon icon={faFilter} />
+
+                        <span>
+                            Filters
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div className="employee-filters">
+
+
+                    {/* Search */}
+
+                    <div className="employee-search">
+
+                        <FontAwesomeIcon
+                            icon={faMagnifyingGlass}
+                            className="search-icon"
+                        />
+
+                        <input
+                            type="text"
+                            placeholder="Search employee..."
+                            value={search}
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                                setPage(1);
+                            }}
+                        />
+
+                    </div>
+
+
+                    {/* Department */}
+
+                    <select
+                        className="employee-filter-select"
+                        value={department}
+                        onChange={(e) => {
+
+                            setDepartment(e.target.value);
+
+                            setPage(1);
+
+                        }}
                     >
 
-                        Next
+                        <option value="">
+                            All Departments
+                        </option>
 
-                    </button>
+                        {departments.map((dept) => (
+
+                            <option
+                                key={dept.id}
+                                value={dept.id}
+                            >
+
+                                {dept.name}
+
+                            </option>
+
+                        ))}
+
+                    </select>
+
+
+                    {/* Status */}
+
+                    <select
+                        className="employee-filter-select"
+                        value={status}
+                        onChange={(e) => {
+
+                            setStatus(e.target.value);
+
+                            setPage(1);
+
+                        }}
+                    >
+
+                        <option value="">
+                            All Status
+                        </option>
+
+                        <option value="true">
+                            Active
+                        </option>
+
+                        <option value="false">
+                            Inactive
+                        </option>
+
+                    </select>
+
+
+                    {/* Ordering */}
+
+                    <select
+                        className="employee-filter-select"
+                        value={ordering}
+                        onChange={(e) => {
+
+                            setOrdering(e.target.value);
+
+                            setPage(1);
+
+                        }}
+                    >
+
+                        <option value="-joining_date">
+                            Newest Joined
+                        </option>
+
+                        <option value="joining_date">
+                            Oldest Joined
+                        </option>
+
+                        <option value="salary">
+                            Salary Low → High
+                        </option>
+
+                        <option value="-salary">
+                            Salary High → Low
+                        </option>
+
+                    </select>
+
+
+                    {/* Page size */}
+
+                    <select
+                        className="employee-filter-select page-size-select"
+                        value={pageSize}
+                        onChange={(e) => {
+
+                            setPageSize(Number(e.target.value));
+
+                            setPage(1);
+
+                        }}
+                    >
+
+                        <option value="5">
+                            5 Rows
+                        </option>
+
+                        <option value="10">
+                            10 Rows
+                        </option>
+
+                        <option value="20">
+                            20 Rows
+                        </option>
+
+                    </select>
 
                 </div>
 
             </div>
+            
+
+            <EmployeeTable employees={employees}  loadEmployees={loadEmployees} loading={loading} error={error} />
+
+            <div className="employee-pagination">
+
+    <div className="employee-pagination-info">
+
+        Showing
+
+        <strong>
+            {" "}
+            {employees.length}
+            {" "}
+        </strong>
+
+        of
+
+        <strong>
+            {" "}
+            {pagination.count || 0}
+            {" "}
+        </strong>
+
+        employees
+
+    </div>
+
+
+    <div className="employee-pagination-controls">
+
+        <button
+            className="pagination-btn"
+            disabled={!pagination.previous}
+            onClick={() => setPage(page - 1)}
+            title="Previous page"
+        >
+
+            <FontAwesomeIcon
+                icon={faChevronLeft}
+            />
+
+            <span>
+                Previous
+            </span>
+
+        </button>
+
+
+        <span className="pagination-page">
+
+            Page {page}
+
+        </span>
+
+
+        <button
+            className="pagination-btn"
+            disabled={!pagination.next}
+            onClick={() => setPage(page + 1)}
+            title="Next page"
+        >
+
+            <span>
+                Next
+            </span>
+
+            <FontAwesomeIcon
+                icon={faChevronRight}
+            />
+
+        </button>
+
+    </div>
+
+</div>
 
         </DashboardLayout>
 

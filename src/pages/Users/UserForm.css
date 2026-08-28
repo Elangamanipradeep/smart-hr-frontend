@@ -1,0 +1,629 @@
+/* =========================================
+   User Form Page
+========================================= */
+
+.user-form-page {
+    width: 100%;
+}
+
+
+/* =========================================
+   Page Header
+========================================= */
+
+.user-form-header {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 20px;
+}
+
+
+.user-form-header h2 {
+    margin: 0;
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    color: #172033;
+}
+
+
+.user-form-header p {
+    margin: 5px 0 0;
+
+    font-size: 14px;
+
+    color: #64748b;
+}
+
+
+/* =========================================
+   Back Button
+========================================= */
+
+.user-form-back {
+    height: 40px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 0 14px;
+
+    border: 1px solid #dbe2ea;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #475569;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+
+.user-form-back:hover {
+    border-color: #2563eb;
+
+    color: #2563eb;
+
+    background: #f8fbff;
+}
+
+
+/* =========================================
+   Form Card
+========================================= */
+
+.user-form-card {
+    width: 100%;
+    
+    max-width: 1100px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8edf3;
+
+    border-radius: 16px;
+
+    padding: 26px;
+
+    box-shadow:
+        0 4px 16px rgba(15, 23, 42, .04);
+}
+
+
+/* =========================================
+   Card Header
+========================================= */
+
+.user-form-card-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding-bottom: 20px;
+
+    margin-bottom: 22px;
+
+    border-bottom: 1px solid #eef1f5;
+}
+
+
+.user-form-icon {
+    width: 44px;
+
+    height: 44px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 17px;
+}
+
+
+.user-form-card-header h3 {
+    margin: 0;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    color: #172033;
+}
+
+
+.user-form-card-header p {
+    margin: 3px 0 0;
+
+    font-size: 12px;
+
+    color: #94a3b8;
+}
+
+
+/* =========================================
+   Form Group
+========================================= */
+
+.user-form-group {
+    margin-bottom: 20px;
+}
+
+
+.user-form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #334155;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+.user-form-group label > span {
+    margin-left: 3px;
+
+    color: #dc2626;
+}
+
+
+/* =========================================
+   Input Wrapper
+========================================= */
+
+.user-input-wrapper,
+.user-password-wrapper {
+    position: relative;
+}
+
+
+.user-input-icon,
+.user-password-icon {
+    position: absolute;
+
+    left: 14px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    z-index: 2;
+
+    color: #94a3b8;
+
+    font-size: 13px;
+
+    pointer-events: none;
+}
+
+
+.user-icon-input {
+    min-height: 45px;
+
+    padding-left: 38px !important;
+
+    border: 1px solid #dbe2ea;
+
+    border-radius: 8px;
+
+    color: #172033;
+
+    font-size: 13px;
+
+    box-shadow: none;
+
+    transition: .2s;
+}
+
+
+.user-icon-input:focus {
+    border-color: #93c5fd;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, .08);
+}
+
+
+.user-icon-input:disabled {
+    background: #f8fafc;
+
+    color: #64748b;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================
+   Password
+========================================= */
+
+.user-password-icon {
+    left: 14px;
+}
+
+
+.user-password-input {
+    min-height: 45px;
+
+    padding-left: 38px !important;
+
+    padding-right: 48px !important;
+
+    border: 1px solid #dbe2ea;
+
+    border-radius: 8px;
+
+    color: #172033;
+
+    font-size: 13px;
+
+    box-shadow: none;
+}
+
+
+.user-password-input:focus {
+    border-color: #93c5fd;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, .08);
+}
+
+
+.password-toggle-btn {
+    position: absolute;
+
+    right: 5px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 36px;
+
+    height: 36px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: transparent;
+
+    color: #94a3b8;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+
+.password-toggle-btn:hover {
+    background: #f1f5f9;
+
+    color: #2563eb;
+}
+
+
+/* =========================================
+   Help Text
+========================================= */
+
+.user-field-help {
+    display: block;
+
+    margin-top: 6px;
+
+    color: #94a3b8;
+
+    font-size: 11px;
+}
+
+
+/* =========================================
+   Error
+========================================= */
+
+.user-form-error {
+    margin-top: 6px;
+
+    color: #dc2626;
+
+    font-size: 12px;
+
+    font-weight: 500;
+}
+
+
+.user-icon-input.is-invalid,
+.user-password-input.is-invalid {
+    border-color: #ef4444 !important;
+}
+
+
+/* =========================================
+   Account Status
+========================================= */
+
+.user-status-setting {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 15px;
+
+    margin-bottom: 22px;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 10px;
+
+    background: #f8fafc;
+}
+
+
+.user-status-setting-icon {
+    width: 40px;
+
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: #ecfdf5;
+
+    color: #16a34a;
+
+    font-size: 17px;
+}
+
+
+.user-status-setting-content {
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.user-status-setting-content strong {
+    color: #334155;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+.user-status-setting-content span {
+    color: #94a3b8;
+
+    font-size: 11px;
+}
+
+
+.user-status-setting .form-check {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin: 0;
+
+    padding: 0;
+}
+
+
+.user-status-setting .form-check-input {
+    width: 34px;
+
+    height: 18px;
+
+    margin: 0;
+
+    cursor: pointer;
+}
+
+
+.user-status-setting .form-check-label {
+    color: #475569;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+/* =========================================
+   Form Actions
+========================================= */
+
+.user-form-actions {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    padding-top: 18px;
+
+    margin-top: 5px;
+
+    border-top: 1px solid #eef1f5;
+}
+
+
+.user-cancel-btn,
+.user-save-btn {
+    height: 40px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 0 16px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+
+.user-cancel-btn {
+    border: 1px solid #dbe2ea;
+
+    background: #ffffff;
+
+    color: #475569;
+}
+
+
+.user-cancel-btn:hover {
+    background: #f8fafc;
+
+    border-color: #cbd5e1;
+}
+
+
+.user-save-btn {
+    border: none;
+
+    background: #2563eb;
+
+    color: #ffffff;
+}
+
+
+.user-save-btn:hover:not(:disabled) {
+    background: #1d4ed8;
+
+    transform: translateY(-1px);
+}
+
+
+.user-cancel-btn:disabled,
+.user-save-btn:disabled {
+    opacity: .65;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================
+   Responsive
+========================================= */
+
+@media (max-width: 768px) {
+
+    .user-form-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+
+    .user-form-back {
+        width: 100%;
+    }
+
+
+    .user-form-card {
+        padding: 20px;
+    }
+
+
+    .user-status-setting {
+        align-items: flex-start;
+
+        flex-wrap: wrap;
+    }
+
+
+    .user-status-setting .form-check {
+        width: 100%;
+
+        margin-left: 53px;
+    }
+
+}
+
+
+@media (max-width: 576px) {
+
+    .user-form-header h2 {
+        font-size: 22px;
+    }
+
+
+    .user-form-actions {
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+    }
+
+
+    .user-cancel-btn,
+    .user-save-btn {
+        width: 100%;
+    }
+
+}

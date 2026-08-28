@@ -1,0 +1,106 @@
+.department-chart {
+
+    width: 100%;
+
+    height: 170px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 28px;
+
+}
+
+
+.department-chart-canvas {
+
+    width: 145px;
+
+    height: 145px;
+
+    flex-shrink: 0;
+
+}
+
+
+.department-chart-legend {
+
+    min-width: 190px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 9px;
+
+}
+
+
+.department-legend-item {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    font-size: 11px;
+
+    color: #475569;
+
+}
+
+
+.department-legend-name {
+
+    min-width: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
+
+
+.legend-dot {
+
+    width: 8px;
+
+    height: 8px;
+
+    flex-shrink: 0;
+
+    border-radius: 2px;
+
+}
+
+
+.department-name {
+
+    max-width: 105px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+.department-legend-value {
+
+    white-space: nowrap;
+
+    color: #475569;
+
+    font-weight: 500;
+
+}

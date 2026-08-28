@@ -1,14 +1,25 @@
 import "./DashboardCard.css";
 
-function DashboardCard({ title, value }) {
+function DashboardCard({ title, value, icon, color }) {
 
     return (
 
         <div className="dashboard-card">
 
-            <h6>{title}</h6>
+            <div className="dashboard-card-top">
 
-            <h3>{value}</h3>
+                <div
+                    className="dashboard-card-icon"
+                    style={{ backgroundColor: color }}
+                >
+                    {icon}
+                </div>
+
+                <h6>{title}</h6>
+
+            </div>
+
+            <h2>{value}</h2>
 
         </div>
 

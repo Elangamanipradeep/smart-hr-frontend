@@ -1,136 +1,508 @@
-.employee-form-card{
+/* =========================================
+   Employee Form Card
+========================================= */
 
-    background:#fff;
+.employee-form-card {
 
-    border-radius:18px;
+    background: #ffffff;
 
-    padding:35px;
+    border: 1px solid #e8edf3;
 
-    box-shadow:0 4px 20px rgba(0,0,0,.08);
+    border-radius: 14px;
+
+    padding: 26px 28px;
+
+    box-shadow:
+        0 4px 14px rgba(15, 23, 42, 0.04);
 
 }
 
-.employee-form-card label{
 
-    font-weight:600;
+/* =========================================
+   Form Header
+========================================= */
 
-    margin-bottom:8px;
+.employee-form-card > div:first-child {
+
+    margin-bottom: 22px !important;
 
 }
+
+
+.employee-form-card h2 {
+
+    margin: 0;
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    color: #172033;
+
+}
+
+
+.employee-form-card h2 + p {
+
+    margin-top: 5px;
+
+    font-size: 13px;
+
+    color: #64748b;
+
+}
+
+
+/* =========================================
+   Labels
+========================================= */
+
+.employee-form-card label {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #334155;
+
+}
+
+.employee-form-card .file-upload-box {
+
+    display: flex;
+
+    margin-bottom: 0;
+
+}
+
+
+/* =========================================
+   Inputs
+========================================= */
 
 .employee-form-card .form-control,
-.employee-form-card .form-select{
+.employee-form-card .form-select {
 
-    height:48px;
+    height: 42px;
 
-}
+    padding: 0 12px;
 
-.employee-form-card textarea{
+    border: 1px solid #dfe5ec;
 
-    resize:none;
+    border-radius: 7px;
 
-}
+    font-size: 13px;
 
-.file-upload-box{
+    color: #172033;
 
-    border:2px dashed #d6dce5;
+    box-shadow: none;
 
-    border-radius:12px;
-
-    height:65px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:0 20px;
-
-    cursor:pointer;
-
-    transition:.3s;
-
-    background:#fafbfd;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 
 }
 
-.file-upload-box:hover{
 
-    border-color:#0d6efd;
+.employee-form-card .form-control:focus,
+.employee-form-card .form-select:focus {
 
-    background:#f3f8ff;
+    border-color: #2563eb;
 
-}
-
-.file-info{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.08);
 
 }
 
-.file-icon{
 
-    font-size:24px;
+/* =========================================
+   Validation Errors
+========================================= */
 
-}
+.employee-form-card .invalid-feedback {
 
-.file-name{
+    margin-top: 5px;
 
-    font-weight:500;
+    font-size: 11px;
 
-    color:#495057;
-
-}
-
-.browse-btn{
-
-    background:#0d6efd;
-
-    color:#fff;
-
-    padding:8px 18px;
-
-    border-radius:8px;
-
-    font-size:14px;
-
-    font-weight:600;
+    color: #dc2626;
 
 }
 
-.photo-preview-card{
 
-    width:220px;
+/* =========================================
+   Active Checkbox
+========================================= */
 
-    padding:20px;
+.employee-form-card .form-check {
 
-    border:1px solid #e5e7eb;
+    display: flex;
 
-    border-radius:16px;
+    align-items: center;
 
-    text-align:center;
-
-    background:white;
-
-    box-shadow:0 10px 25px rgba(0,0,0,.05);
+    gap: 8px;
 
 }
 
-.employee-preview{
 
-    width:170px;
+.employee-form-card .form-check-input {
 
-    height:170px;
+    width: 17px;
 
-    border-radius:14px;
+    height: 17px;
 
-    object-fit:cover;
+    margin: 0;
 
-    border:2px solid #e5e7eb;
+    cursor: pointer;
+
+}
+
+
+.employee-form-card .form-check-label {
+
+    margin: 0;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    color: #475569;
+
+    cursor: pointer;
+
+}
+
+
+/* =========================================
+   File Upload
+========================================= */
+
+.file-upload-box {
+
+    min-height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 0 14px;
+
+    border: 1px dashed #cbd5e1;
+
+    border-radius: 9px;
+
+    background: #f8fafc;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+
+}
+
+
+.file-upload-box:hover {
+
+    border-color: #2563eb;
+
+    background: #f8fbff;
+
+}
+
+
+.file-info {
+
+    min-width: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.file-icon {
+
+    width: 34px;
+
+    height: 34px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 14px;
+
+}
+
+
+.file-name {
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    color: #475569;
+
+}
+
+
+/* =========================================
+   Browse Button
+========================================= */
+
+.browse-btn {
+
+    flex-shrink: 0;
+
+    padding: 7px 13px;
+
+    border-radius: 7px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================
+   Photo Preview
+========================================= */
+
+.photo-preview-card {
+
+    width: 190px;
+
+    padding: 14px;
+
+    border: 1px solid #e5eaf0;
+
+    border-radius: 12px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 4px 14px rgba(15, 23, 42, 0.05);
+
+}
+
+
+.employee-preview {
+
+    width: 145px;
+
+    height: 145px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    border: 1px solid #e5eaf0;
+
+}
+
+
+.photo-preview-card h6 {
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #334155;
+
+}
+
+
+.photo-preview-card small {
+
+    display: block;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    font-size: 10px;
+
+}
+
+
+/* =========================================
+   Form Actions
+========================================= */
+
+.employee-form-card form > .d-flex {
+
+    margin-top: 8px;
+
+}
+
+
+.employee-form-card form > .d-flex .btn {
+
+    min-width: 105px;
+
+    height: 40px;
+
+    padding: 0 16px;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================
+   Responsive
+========================================= */
+
+@media (max-width: 768px) {
+
+    .employee-form-card {
+
+        padding: 20px;
+
+    }
+
+
+    .employee-form-card h2 {
+
+        font-size: 20px;
+
+    }
+
+
+    .photo-preview-card {
+
+        width: 180px;
+
+    }
+
+
+    .employee-preview {
+
+        width: 135px;
+
+        height: 135px;
+
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .employee-form-card {
+
+        padding: 17px;
+
+        border-radius: 11px;
+
+    }
+
+
+    .file-upload-box {
+
+        align-items: stretch;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        padding: 12px;
+
+    }
+
+
+    .file-info {
+
+        width: 100%;
+
+    }
+
+
+    .browse-btn {
+
+        text-align: center;
+
+    }
+
+
+    .photo-preview-card {
+
+        width: 100%;
+
+    }
+
+
+    .employee-preview {
+
+        width: 130px;
+
+        height: 130px;
+
+    }
+
+
+    .employee-form-card form > .d-flex {
+
+        width: 100%;
+
+    }
+
+
+    .employee-form-card form > .d-flex .btn {
+
+        flex: 1;
+
+    }
+
+}
+
+.browse-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
 
 }

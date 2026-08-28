@@ -1,17 +1,39 @@
-import { useNavigate, useParams  } from "react-router-dom";
-import { createEmployee, getEmployee, updateEmployee, } from "../../services/employeeService";
+import { useNavigate, useParams } from "react-router-dom";
+
+import {
+    createEmployee,
+    getEmployee,
+    updateEmployee,
+} from "../../services/employeeService";
+
 import { toast } from "react-toastify";
+
 import "./EmployeeForm.css";
+
 import { useEffect, useState } from "react";
-import { getDepartments } from "../../services/departmentService";
+
+import { getDepartmentOptions } from "../../services/departmentService";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import {
+    faImage,
+    faUpload,
+    faSave,
+    faRotate,
+} from "@fortawesome/free-solid-svg-icons";
+
 
 function EmployeeFormComponent() {
 
     const [departments, setDepartments] = useState([]);
+
     const navigate = useNavigate();
+
     const { id } = useParams();
 
     const [formData, setFormData] = useState({
+
         full_name: "",
         email: "",
         phone: "",
@@ -21,9 +43,15 @@ function EmployeeFormComponent() {
         is_active: true,
         profile_photo: null,
         department: "",
+
     });
+
     const [previewImage, setPreviewImage] = useState("");
+
     const [errors, setErrors] = useState({});
+
+    const [loading, setLoading] = useState(false);
+
 
     useEffect(() => {
 
@@ -37,13 +65,14 @@ function EmployeeFormComponent() {
 
     }, [id]);
 
+
     const loadDepartments = async () => {
 
         try {
 
-            const response = await getDepartments();
+            const response = await getDepartmentOptions();
 
-            setDepartments(response.results);
+            setDepartments(response);
 
         }
 
@@ -54,6 +83,7 @@ function EmployeeFormComponent() {
         }
 
     };
+
 
     const loadEmployee = async () => {
 
@@ -74,6 +104,7 @@ function EmployeeFormComponent() {
                 department: employee.department,
 
             });
+
             setPreviewImage(employee.profile_photo);
 
         }
@@ -86,9 +117,17 @@ function EmployeeFormComponent() {
 
     };
 
+
     const handleChange = (event) => {
 
-        const { name, value, type, checked, files } = event.target;
+        const {
+            name,
+            value,
+            type,
+            checked,
+            files,
+        } = event.target;
+
 
         if (type === "file") {
 
@@ -110,19 +149,43 @@ function EmployeeFormComponent() {
 
             );
 
+            setErrors({
+
+                ...errors,
+
+                profile_photo: "",
+
+            });
+
             return;
 
         }
+
 
         setFormData({
 
             ...formData,
 
-            [name]: type === "checkbox" ? checked : value,
+            [name]:
+                type === "checkbox"
+                    ? checked
+                    : value,
+
+        });
+
+
+        // Clear the error for the field being edited
+
+        setErrors({
+
+            ...errors,
+
+            [name]: "",
 
         });
 
     };
+
 
     const handleSubmit = async (event) => {
 
@@ -130,39 +193,60 @@ function EmployeeFormComponent() {
 
         setErrors({});
 
+        setLoading(true);
+
+
         try {
 
             const employeeData = new FormData();
 
+
             Object.keys(formData).forEach((key) => {
 
-                // Don't send empty profile_photo
+                // Don't send empty profile photo
+
                 if (
                     key === "profile_photo" &&
                     !formData.profile_photo
                 ) {
+
                     return;
+
                 }
 
-                employeeData.append(key, formData[key]);
+                employeeData.append(
+                    key,
+                    formData[key]
+                );
 
             });
 
+
             if (id) {
 
-                await updateEmployee(id, employeeData);
+                await updateEmployee(
+                    id,
+                    employeeData
+                );
 
-                toast.success("Employee updated successfully.");
+                toast.success(
+                    "Employee updated successfully."
+                );
 
             }
 
             else {
 
-                await createEmployee(employeeData);
+                await createEmployee(
+                    employeeData
+                );
 
-                toast.success("Employee created successfully.");
+                toast.success(
+                    "Employee created successfully."
+                );
 
             }
+
 
             navigate("/employees");
 
@@ -172,50 +256,89 @@ function EmployeeFormComponent() {
 
             console.log(error);
 
-            if (error.response?.status === 400) {
 
-                setErrors(error.response.data);
+            if (
+                error.response?.status === 400
+            ) {
+
+                setErrors(
+                    error.response.data
+                );
 
             }
+
             else {
 
-                toast.error("Something went wrong.");
+                toast.error(
+                    "Something went wrong."
+                );
 
             }
 
         }
 
+        finally {
+
+            setLoading(false);
+
+        }
+
     };
+
 
     return (
 
         <div className="employee-form-card">
 
+
+            {/* Header */}
+
             <div className="mb-4">
 
-                <h2>{id ? "Edit Employee" : "Add Employee"}</h2>
+                <h2>
+
+                    Employee Information
+
+                </h2>
 
                 <p className="text-muted">
-                    Fill in the employee information below.
+
+                    {id
+                        ? "Update the employee information below."
+                        : "Enter the employee information below."
+                    }
+
                 </p>
 
             </div>
 
+
             <form onSubmit={handleSubmit}>
+
 
                 <div className="row">
 
+
+                    {/* Full Name */}
+
                     <div className="col-md-6 mb-3">
 
-                        <label>Full Name</label>
+                        <label>
+                            Full Name *
+                        </label>
 
                         <input
                             type="text"
-                            className="form-control"
+                            className={`form-control ${
+                                errors.full_name
+                                    ? "is-invalid"
+                                    : ""
+                            }`}
                             name="full_name"
                             value={formData.full_name}
                             onChange={handleChange}
                         />
+
                         {errors.full_name && (
 
                             <div className="invalid-feedback d-block">
@@ -228,13 +351,22 @@ function EmployeeFormComponent() {
 
                     </div>
 
+
+                    {/* Email */}
+
                     <div className="col-md-6 mb-3">
 
-                        <label>Email</label>
+                        <label>
+                            Email *
+                        </label>
 
                         <input
                             type="email"
-                            className="form-control"
+                            className={`form-control ${
+                                errors.email
+                                    ? "is-invalid"
+                                    : ""
+                            }`}
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
@@ -252,13 +384,22 @@ function EmployeeFormComponent() {
 
                     </div>
 
+
+                    {/* Phone */}
+
                     <div className="col-md-6 mb-3">
 
-                        <label>Phone</label>
+                        <label>
+                            Phone *
+                        </label>
 
                         <input
                             type="text"
-                            className="form-control"
+                            className={`form-control ${
+                                errors.phone
+                                    ? "is-invalid"
+                                    : ""
+                            }`}
                             name="phone"
                             value={formData.phone}
                             onChange={handleChange}
@@ -276,20 +417,32 @@ function EmployeeFormComponent() {
 
                     </div>
 
+
+                    {/* Department */}
+
                     <div className="col-md-6 mb-3">
 
-                        <label>Department</label>
+                        <label>
+                            Department *
+                        </label>
 
                         <select
-                            className="form-select"
+                            className={`form-select ${
+                                errors.department
+                                    ? "is-invalid"
+                                    : ""
+                            }`}
                             name="department"
                             value={formData.department}
                             onChange={handleChange}
                         >
 
                             <option value="">
+
                                 Select Department
+
                             </option>
+
 
                             {departments.map((dept) => (
 
@@ -305,6 +458,8 @@ function EmployeeFormComponent() {
                             ))}
 
                         </select>
+
+
                         {errors.department && (
 
                             <div className="invalid-feedback d-block">
@@ -317,17 +472,27 @@ function EmployeeFormComponent() {
 
                     </div>
 
+
+                    {/* Designation */}
+
                     <div className="col-md-6 mb-3">
 
-                        <label>Designation</label>
+                        <label>
+                            Designation *
+                        </label>
 
                         <input
                             type="text"
-                            className="form-control"
+                            className={`form-control ${
+                                errors.designation
+                                    ? "is-invalid"
+                                    : ""
+                            }`}
                             name="designation"
                             value={formData.designation}
                             onChange={handleChange}
                         />
+
                         {errors.designation && (
 
                             <div className="invalid-feedback d-block">
@@ -340,17 +505,27 @@ function EmployeeFormComponent() {
 
                     </div>
 
+
+                    {/* Salary */}
+
                     <div className="col-md-6 mb-3">
 
-                        <label>Salary</label>
+                        <label>
+                            Salary *
+                        </label>
 
                         <input
                             type="number"
-                            className="form-control"
+                            className={`form-control ${
+                                errors.salary
+                                    ? "is-invalid"
+                                    : ""
+                            }`}
                             name="salary"
                             value={formData.salary}
                             onChange={handleChange}
                         />
+
                         {errors.salary && (
 
                             <div className="invalid-feedback d-block">
@@ -363,17 +538,27 @@ function EmployeeFormComponent() {
 
                     </div>
 
+
+                    {/* Joining Date */}
+
                     <div className="col-md-6 mb-3">
 
-                        <label>Joining Date</label>
+                        <label>
+                            Joining Date *
+                        </label>
 
                         <input
                             type="date"
-                            className="form-control"
+                            className={`form-control ${
+                                errors.joining_date
+                                    ? "is-invalid"
+                                    : ""
+                            }`}
                             name="joining_date"
                             value={formData.joining_date}
                             onChange={handleChange}
                         />
+
                         {errors.joining_date && (
 
                             <div className="invalid-feedback d-block">
@@ -385,6 +570,9 @@ function EmployeeFormComponent() {
                         )}
 
                     </div>
+
+
+                    {/* Active Employee */}
 
                     <div className="col-md-6 mb-3 d-flex align-items-center">
 
@@ -408,13 +596,17 @@ function EmployeeFormComponent() {
 
                     </div>
 
+
+                    {/* Profile Photo */}
+
                     <div className="col-12 mb-4">
 
                         <label className="form-label fw-semibold">
 
-                            Profile Photo
+                            Profile Photo (Optional)
 
                         </label>
+
 
                         <input
                             id="profile_photo"
@@ -424,6 +616,8 @@ function EmployeeFormComponent() {
                             accept="image/*"
                             onChange={handleChange}
                         />
+
+
                         {errors.profile_photo && (
 
                             <div className="invalid-feedback d-block">
@@ -434,97 +628,163 @@ function EmployeeFormComponent() {
 
                         )}
 
+
                         <label
                             htmlFor="profile_photo"
                             className="file-upload-box"
                         >
 
-                        <div className="file-info">
+                            <div className="file-info">
 
-                            <span className="file-icon">
+                                <span className="file-icon">
 
-                                📷
+                                    <FontAwesomeIcon
+                                        icon={faImage}
+                                    />
+
+                                </span>
+
+
+                                <span className="file-name">
+
+                                    {
+                                        formData.profile_photo
+
+                                            ? formData.profile_photo.name
+
+                                            : previewImage
+
+                                                ? previewImage
+                                                    .split("/")
+                                                    .pop()
+
+                                                : "Choose Profile Photo"
+                                    }
+
+                                </span>
+
+                            </div>
+
+
+                            <span className="browse-btn">
+
+                                <FontAwesomeIcon
+                                    icon={faUpload}
+                                />
+
+                                <span>
+
+                                    Browse
+
+                                </span>
 
                             </span>
 
-                            <span className="file-name">
+                        </label>
 
-                                {
-                                    formData.profile_photo
-                                        ? formData.profile_photo.name
-                                        : previewImage
-                                        ? previewImage.split("/").pop()
-                                        : "Choose Profile Photo"
-                                }
 
-                            </span>
+                        {/* Image Preview */}
 
-                        </div>
+                        {previewImage && (
 
-                        <span className="browse-btn">
+                            <div className="photo-preview-card mt-4">
 
-                            Browse
+                                <img
+                                    src={previewImage}
+                                    alt="Employee Preview"
+                                    className="employee-preview"
+                                />
 
-                        </span>
 
-                    </label>
+                                <h6 className="mt-3 mb-1">
 
-                    {previewImage && (
+                                    {
+                                        formData.full_name ||
+                                        "Employee Name"
+                                    }
 
-                        <div className="photo-preview-card mt-4">
+                                </h6>
 
-                            <img
-                                src={previewImage}
-                                alt="Employee Preview"
-                                className="employee-preview"
-                            />
 
-                            <h6 className="mt-3 mb-1">
+                                <small className="text-muted">
 
-                                {
-                                    formData.full_name || "Employee Name"
-                                }
+                                    {
+                                        formData.profile_photo
 
-                            </h6>
+                                            ? formData.profile_photo.name
 
-                            <small className="text-muted">
+                                            : previewImage
+                                                .split("/")
+                                                .pop()
+                                    }
 
-                                {
-                                    formData.profile_photo
-                                        ? formData.profile_photo.name
-                                        : previewImage.split("/").pop()
-                                }
+                                </small>
 
-                            </small>
+                            </div>
 
-                        </div>
+                        )}
 
-                    )}
-
-                    </div>  
+                    </div>
 
                 </div>
 
+
+                {/* Buttons */}
+
                 <div className="d-flex justify-content-end gap-3">
+
 
                     <button
                         type="button"
-                        className="btn btn-secondary" onClick={() => navigate("/employees")}
+                        className="btn btn-secondary"
+                        disabled={loading}
+                        onClick={() =>
+                            navigate("/employees")
+                        }
                     >
 
                         Cancel
 
                     </button>
 
+
                     <button
                         type="submit"
-                        className="btn btn-primary">
+                        className="btn btn-primary"
+                        disabled={loading}
+                    >
 
-                        {id ? "Update Employee" : "Save Employee"}
+                        <FontAwesomeIcon
+                            icon={
+                                loading
+                                    ? faRotate
+                                    : faSave
+                            }
+                            spin={loading}
+                        />
+
+                        {" "}
+
+                        {loading
+
+                            ? (
+                                id
+                                    ? "Updating..."
+                                    : "Saving..."
+                            )
+
+                            : (
+                                id
+                                    ? "Update Employee"
+                                    : "Save Employee"
+                            )
+
+                        }
 
                     </button>
 
                 </div>
+
 
             </form>
 
@@ -533,5 +793,6 @@ function EmployeeFormComponent() {
     );
 
 }
+
 
 export default EmployeeFormComponent;

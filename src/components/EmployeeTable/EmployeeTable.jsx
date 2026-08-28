@@ -4,7 +4,22 @@ import Swal from "sweetalert2";
 import { deleteEmployee } from "../../services/employeeService";
 import EmployeeCard from "../EmployeeCard/EmployeeCard";
 
-function EmployeeTable({ employees, loadEmployees }) {
+import defaultProfile from "../../assets/default-profile.png";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import {
+    faEye,
+    faPen,
+    faTrash,
+    faEnvelope,
+    faPhone,
+    faSpinner,
+} from "@fortawesome/free-solid-svg-icons";
+
+function EmployeeTable({ employees, loadEmployees, loading, error }) {
+
+    const role = localStorage.getItem("role");
 
     const handleDelete = async (id) => {
 
@@ -63,6 +78,64 @@ function EmployeeTable({ employees, loadEmployees }) {
         }
 
     };
+    
+    if (error) {
+
+        return (
+
+            <div className="error-state">
+
+                <div className="error-icon">
+
+                    <i className="fa-solid fa-triangle-exclamation"></i>
+
+                </div>
+
+                <h4>
+                    Unable to Load Employees
+                </h4>
+
+                <p>
+                    Something went wrong while loading the employee data.
+                </p>
+
+                <button
+                    className="btn btn-primary"
+                    onClick={loadEmployees}
+                >
+
+                    <i className="fa-solid fa-rotate-right me-2"></i>
+
+                    Try Again
+
+                </button>
+
+            </div>
+
+        );
+
+    }
+
+    if (loading) {
+
+        return (
+
+            <div className="employee-loading">
+
+                <FontAwesomeIcon
+                    icon={faSpinner}
+                    spin
+                />
+
+                <span>
+                    Loading employees...
+                </span>
+
+            </div>
+
+        );
+
+    }
 
     if (employees.length === 0) {
 
@@ -138,7 +211,7 @@ function EmployeeTable({ employees, loadEmployees }) {
 
                                             <img
 
-                                                src={employee.profile_photo}
+                                                src={employee.profile_photo || defaultProfile}
 
                                                 alt={employee.full_name}
 
@@ -168,19 +241,27 @@ function EmployeeTable({ employees, loadEmployees }) {
 
                                     <td>
 
-                                        <div>
+                                        <div className="employee-contact">
 
-                                            <div>
+                                            <div className="contact-item">
 
-                                                📧 {employee.email}
+                                                <FontAwesomeIcon icon={faEnvelope} />
+
+                                                <span>
+                                                    {employee.email}
+                                                </span>
 
                                             </div>
 
-                                            <small className="text-muted">
+                                            <div className="contact-item">
 
-                                                📱 {employee.phone}
+                                                <FontAwesomeIcon icon={faPhone} />
 
-                                            </small>
+                                                <span>
+                                                    {employee.phone}
+                                                </span>
+
+                                            </div>
 
                                         </div>
 
@@ -234,7 +315,11 @@ function EmployeeTable({ employees, loadEmployees }) {
                                             }`}
                                         >
 
-                                            {employee.is_active ? "🟢 Active" : "🔴 Inactive"}
+                                            <span className="status-dot"></span>
+
+                                            {employee.is_active
+                                                ? "Active"
+                                                : "Inactive"}
 
                                         </span>
 
@@ -249,7 +334,7 @@ function EmployeeTable({ employees, loadEmployees }) {
                                                 className="btn btn-outline-info btn-sm"
                                                 title="View"
                                             >
-                                                👁
+                                                <FontAwesomeIcon icon={faEye} />
                                             </Link>
 
                                             <Link
@@ -257,16 +342,18 @@ function EmployeeTable({ employees, loadEmployees }) {
                                                 className="btn btn-outline-warning btn-sm"
                                                 title="Edit"
                                             >
-                                                ✏️
+                                                <FontAwesomeIcon icon={faPen} />
                                             </Link>
 
-                                            <button
-                                                className="btn btn-outline-danger btn-sm"
-                                                title="Delete"
-                                                onClick={() => handleDelete(employee.id)}
-                                            >
-                                                🗑
-                                            </button>
+
+                                            {role === "Admin" && (
+                                                <button
+                                                    className="btn btn-outline-danger btn-sm"
+                                                    onClick={() => handleDelete(employee.id)}
+                                                >
+                                                    <FontAwesomeIcon icon={faTrash} />
+                                                </button>
+                                            )}
 
                                         </div>
 

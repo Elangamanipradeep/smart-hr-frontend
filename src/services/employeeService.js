@@ -9,12 +9,32 @@ export const getEmployees = async (
     ordering = ""
 ) => {
 
+    const params = new URLSearchParams();
+
+    params.append("page", page);
+    params.append("size", size);
+
+    if (search) {
+        params.append("search", search);
+    }
+
+    if (department) {
+        params.append("department", department);
+    }
+
+    if (status) {
+        params.append("is_active", status);
+    }
+
+    if (ordering) {
+        params.append("ordering", ordering);
+    }
+
     const response = await api.get(
-        `employees/?page=${page}&size=${size}&search=${search}&department=${department}&is_active=${status}&ordering=${ordering}`
+        `employees/?${params.toString()}`
     );
 
     return response.data;
-
 };
 
 export const createEmployee = async (employeeData) => {
