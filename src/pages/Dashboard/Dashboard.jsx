@@ -663,11 +663,8 @@ function Dashboard() {
 
                                                 const profileImage =
                                                     employee.profile_photo
-                                                        ? employee.profile_photo.startsWith("http")
-                                                            ? employee.profile_photo
-                                                            : `http://127.0.0.1:8000${employee.profile_photo}`
+                                                        ? employee.profile_photo
                                                         : "/images/default-employee.png";
-
 
                                                 return (
 
