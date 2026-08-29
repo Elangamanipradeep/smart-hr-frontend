@@ -18,6 +18,7 @@ import {
 
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { getDashboardData } from "../../services/dashboardService";
+import { getHRInsights } from "../../services/api";
 
 import EmployeeStatusChart from "../../components/Dashboard/EmployeeStatusChart";
 import DepartmentChart from "../../components/Dashboard/DepartmentChart";
@@ -25,9 +26,24 @@ import DepartmentChart from "../../components/Dashboard/DepartmentChart";
 import "./Dashboard.css";
 
 
+function cleanAIResponse(text) {
+
+    if (!text) {
+        return "";
+    }
+
+    return text.replace(/\*\*/g, "").trim();
+}
+
 function Dashboard() {
 
     const [dashboard, setDashboard] = useState(null);
+    
+    const [aiInsights, setAiInsights] = useState("");
+
+    const [aiLoading, setAiLoading] = useState(false);
+
+    const [aiError, setAiError] = useState("");
 
     useEffect(() => {
 
@@ -52,6 +68,39 @@ function Dashboard() {
 
         }
 
+    };
+
+    const handleGenerateAIInsights = async () => {
+
+        if (aiLoading) {
+            return;
+        }
+
+        setAiLoading(true);
+        setAiError("");
+        setAiInsights("");
+
+        try {
+
+            const response = await getHRInsights();
+
+            setAiInsights(
+                cleanAIResponse(response.insights)
+            );
+
+        } catch (error) {
+
+            console.log(error);
+
+            setAiError(
+                "Unable to generate AI HR insights."
+            );
+
+        } finally {
+
+            setAiLoading(false);
+
+        }
     };
 
 
@@ -450,6 +499,107 @@ function Dashboard() {
 
 
                     </div>
+
+                </div>
+
+                {/* =========================
+                    AI HR Insights
+                ========================= */}
+
+                <div className="dashboard-panel ai-insights-panel">
+
+                    <div className="panel-header">
+
+                        <div>
+
+                            <h3>
+                                🤖 AI HR Insights
+                            </h3>
+
+                            <p>
+                                AI-powered analysis of your organization's HR data
+                            </p>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            className="ai-insights-button"
+                            onClick={handleGenerateAIInsights}
+                            disabled={aiLoading}
+                        >
+
+                            {aiLoading
+                                ? "Analyzing..."
+                                : "Generate Insights"
+                            }
+
+                        </button>
+
+                    </div>
+
+
+                    {/* Loading */}
+
+                    {aiLoading && (
+
+                        <div className="ai-insights-loading">
+
+                            <div className="spinner-border text-primary"></div>
+
+                            <p>
+                                Analyzing HR data...
+                            </p>
+
+                        </div>
+
+                    )}
+
+
+                    {/* Error */}
+
+                    {aiError && (
+
+                        <div className="ai-insights-error">
+
+                            {aiError}
+
+                        </div>
+
+                    )}
+
+
+                    {/* AI Response */}
+
+                    {aiInsights && !aiLoading && (
+
+                        <div className="ai-insights-content">
+
+                            {aiInsights}
+
+                        </div>
+
+                    )}
+
+
+                    {/* Initial State */}
+
+                    {!aiInsights && !aiLoading && !aiError && (
+
+                        <div className="ai-insights-empty">
+
+                            <div className="ai-insights-empty-icon">
+                                🤖
+                            </div>
+
+                            <p>
+                                Generate AI insights to discover important
+                                patterns and observations from your HR data.
+                            </p>
+
+                        </div>
+
+                    )}
 
                 </div>
 

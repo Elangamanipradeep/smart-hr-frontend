@@ -983,3 +983,142 @@
     }
 
 }
+
+/* =========================================
+   AI HR Insights
+========================================= */
+
+.ai-insights-panel {
+    margin-top: 20px;
+}
+
+
+.ai-insights-button {
+    border: none;
+    border-radius: 8px;
+
+    padding: 10px 16px;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.ai-insights-button:hover:not(:disabled) {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+
+.ai-insights-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+
+.ai-insights-content {
+    margin-top: 18px;
+
+    padding: 20px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 10px;
+
+    color: #334155;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    white-space: pre-wrap;
+}
+
+
+.ai-insights-loading {
+    min-height: 150px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+.ai-insights-loading p {
+    margin-top: 12px;
+
+    margin-bottom: 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+
+.ai-insights-empty {
+    min-height: 150px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 20px;
+}
+
+
+.ai-insights-empty-icon {
+    font-size: 36px;
+
+    margin-bottom: 10px;
+}
+
+
+.ai-insights-empty p {
+    max-width: 600px;
+
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+.ai-insights-error {
+    margin-top: 18px;
+
+    padding: 12px 15px;
+
+    border-radius: 8px;
+
+    background: #fef2f2;
+
+    border: 1px solid #fecaca;
+
+    color: #b91c1c;
+
+    font-size: 13px;
+}

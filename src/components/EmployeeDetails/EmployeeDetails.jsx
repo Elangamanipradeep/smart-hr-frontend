@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import DashboardLayout from "../../layouts/DashboardLayout";
 
 import { getEmployee } from "../../services/employeeService";
+import { getEmployeeAIInsights } from "../../services/api";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -21,7 +22,18 @@ import {
     faIdBadge,
     faCircleCheck,
     faCircleXmark,
+    faRobot,
 } from "@fortawesome/free-solid-svg-icons";
+
+
+function cleanAIResponse(text) {
+
+    if (!text) {
+        return "";
+    }
+
+    return text.replace(/\*\*/g, "").trim();
+}
 
 
 function EmployeeDetailsComponent() {
@@ -35,6 +47,12 @@ function EmployeeDetailsComponent() {
     const [loading, setLoading] = useState(true);
     
     const [error, setError] = useState(false);
+
+    const [aiInsights, setAiInsights] = useState("");
+
+    const [aiLoading, setAiLoading] = useState(false);
+
+    const [aiError, setAiError] = useState("");
 
 
     useEffect(() => {
@@ -73,91 +91,140 @@ function EmployeeDetailsComponent() {
 
     };
 
+    const handleGenerateAIInsights = async () => {
 
-if (loading) {
+        if (!employee || aiLoading) {
+            return;
+        }
 
-    return (
+        setAiLoading(true);
+        setAiError("");
+        setAiInsights("");
 
-        <DashboardLayout>
+        try {
 
-            <div className="details-loading-state">
+            const response = await getEmployeeAIInsights(
+                employee.id
+            );
 
-                <div
-                    className="spinner-border text-primary"
-                    role="status"
-                >
+            setAiInsights(
+                cleanAIResponse(response.insights)
+            );
 
-                    <span className="visually-hidden">
-                        Loading...
-                    </span>
+        } catch (error) {
 
-                </div>
+            console.error(
+                "Employee AI Insights Error:",
+                error
+            );
 
-                <p>
-                    Loading employee details...
-                </p>
+            if (error.response?.data?.error) {
 
-            </div>
+                setAiError(
+                    error.response.data.error
+                );
 
-        </DashboardLayout>
+            } else {
 
-    );
+                setAiError(
+                    "Unable to generate AI insights."
+                );
 
-}
+            }
 
-if (error || !employee) {
+        } finally {
 
-    return (
+            setAiLoading(false);
 
-        <DashboardLayout>
+        }
 
-            <div className="details-error-state">
+    };
 
-                <div className="details-error-icon">
 
-                    <i className="fa-solid fa-triangle-exclamation"></i>
+    if (loading) {
 
-                </div>
+        return (
 
-                <h4>
-                    Unable to Load Employee
-                </h4>
+            <DashboardLayout>
 
-                <p>
-                    Something went wrong while loading the employee details.
-                </p>
+                <div className="details-loading-state">
 
-                <div className="d-flex justify-content-center gap-2">
-
-                    <button
-                        className="btn btn-primary"
-                        onClick={loadEmployee}
+                    <div
+                        className="spinner-border text-primary"
+                        role="status"
                     >
 
-                        <i className="fa-solid fa-rotate-right me-2"></i>
+                        <span className="visually-hidden">
+                            Loading...
+                        </span>
 
-                        Try Again
+                    </div>
 
-                    </button>
-
-                    <button
-                        className="btn btn-outline-secondary"
-                        onClick={() => navigate("/employees")}
-                    >
-
-                        Back to Employees
-
-                    </button>
+                    <p>
+                        Loading employee details...
+                    </p>
 
                 </div>
 
-            </div>
+            </DashboardLayout>
 
-        </DashboardLayout>
+        );
 
-    );
+    }
 
-}
+    if (error || !employee) {
+
+        return (
+
+            <DashboardLayout>
+
+                <div className="details-error-state">
+
+                    <div className="details-error-icon">
+
+                        <i className="fa-solid fa-triangle-exclamation"></i>
+
+                    </div>
+
+                    <h4>
+                        Unable to Load Employee
+                    </h4>
+
+                    <p>
+                        Something went wrong while loading the employee details.
+                    </p>
+
+                    <div className="d-flex justify-content-center gap-2">
+
+                        <button
+                            className="btn btn-primary"
+                            onClick={loadEmployee}
+                        >
+
+                            <i className="fa-solid fa-rotate-right me-2"></i>
+
+                            Try Again
+
+                        </button>
+
+                        <button
+                            className="btn btn-outline-secondary"
+                            onClick={() => navigate("/employees")}
+                        >
+
+                            Back to Employees
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </DashboardLayout>
+
+        );
+
+    }
 
 
     return (
@@ -167,9 +234,9 @@ if (error || !employee) {
 
             {/* Header */}
 
-            <div className="employee-details-header">
+            <div className="employee-details-header justify-content-end">
 
-                <div>
+                {/* <div>
 
                     <h2>
 
@@ -183,7 +250,7 @@ if (error || !employee) {
 
                     </p>
 
-                </div>
+                </div> */}
 
 
                 <button
@@ -281,6 +348,87 @@ if (error || !employee) {
 
             </div>
 
+            {/* AI Employee Insights */}
+
+            <div className="employee-ai-insights-card">
+
+                <div className="employee-ai-insights-header">
+
+                    <div className="employee-ai-title">
+
+                        <div className="employee-ai-icon">
+
+                            <FontAwesomeIcon icon={faRobot} />
+
+                        </div>
+
+                        <div>
+
+                            <h4>
+                                AI Employee Insights
+                            </h4>
+
+                            <p>
+                                Generate an AI-powered summary of this employee's HR profile.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        className="employee-ai-button"
+                        onClick={handleGenerateAIInsights}
+                        disabled={aiLoading}
+                    >
+
+                        <FontAwesomeIcon icon={faRobot} />
+
+                        {aiLoading
+                            ? "Generating..."
+                            : "Generate AI Insight"
+                        }
+
+                    </button>
+
+                </div>
+
+
+                {aiError && (
+
+                    <div className="employee-ai-error">
+
+                        {aiError}
+
+                    </div>
+
+                )}
+
+
+                {aiInsights && (
+
+                    <div className="employee-ai-response">
+
+                        <div className="employee-ai-response-title">
+
+                            <FontAwesomeIcon icon={faRobot} />
+
+                            AI Analysis
+
+                        </div>
+
+                        <div className="employee-ai-response-content">
+
+                            {aiInsights}
+
+                        </div>
+
+                    </div>
+
+                )}
+
+            </div>
 
             {/* Information Cards */}
 

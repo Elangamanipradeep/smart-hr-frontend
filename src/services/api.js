@@ -146,5 +146,34 @@ api.interceptors.response.use(
 
 );
 
+export const askAI = async (question) => {
+
+    const response = await api.post(
+        "ai/ask/",
+        {
+            question,
+        }
+    );
+
+    return response.data;
+};
+
+export const getEmployeeAIInsights = async (employeeId) => {
+    const response = await api.get(
+        `/ai/employees/${employeeId}/insights/`
+    );
+
+    return response.data;
+};
+
+export const getHRInsights = async () => {
+
+    const response = await api.get(
+        "/ai/insights/"
+    );
+
+    return response.data;
+};
+
 
 export default api;

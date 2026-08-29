@@ -3,6 +3,7 @@ import {
     faBuilding,
     faChartPie,
     faRightFromBracket,
+    faRobot,
     faUser,
     faUserShield,
     faUsers,
@@ -139,6 +140,9 @@ function DashboardLayout({ children }) {
         if (location.pathname === "/departments")
             return "Departments";
 
+        if (location.pathname === "/ai-assistant")
+            return "AI HR Assistant";
+
         if (location.pathname.includes("/users/edit/"))
             return "Edit User";
 
@@ -178,6 +182,9 @@ function DashboardLayout({ children }) {
         if (location.pathname.includes("/profile"))
             return "Manage your profile information.";
 
+        if (location.pathname === "/ai-assistant")
+            return "Ask questions about your HR data.";
+
         return "Manage your organization efficiently.";
 
     };
@@ -216,6 +223,12 @@ function DashboardLayout({ children }) {
             name: "Departments",
             path: "/departments",
             icon: faBuilding,
+        },
+
+        {
+            name: "AI Assistant",
+            path: "/ai-assistant",
+            icon: faRobot,
         },
 
         ...(role === "Admin"

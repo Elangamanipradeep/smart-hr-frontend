@@ -17,6 +17,11 @@ import UserForm from "./pages/Users/UserForm";
 import AdminRoute from "./routes/AdminRoute";
 import Unauthorized from "./pages/Unauthorized/Unauthorized";
 
+import AIAssistant from "./pages/AIAssistant/AIAssistant";
+import AdminOrHRRoute from "./routes/AdminOrHRRoute";
+
+import DashboardLayout from "./layouts/DashboardLayout";
+
 function App() {
   return (
     <BrowserRouter>
@@ -32,6 +37,17 @@ function App() {
                 </ProtectedRoute>
             }
         />
+
+        <Route
+    path="/ai-assistant"
+    element={
+        <AdminOrHRRoute>
+            <DashboardLayout>
+                <AIAssistant />
+            </DashboardLayout>
+        </AdminOrHRRoute>
+    }
+/>
 
         <Route
             path="/employees"
