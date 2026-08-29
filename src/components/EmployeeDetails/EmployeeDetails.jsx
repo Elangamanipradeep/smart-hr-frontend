@@ -10,6 +10,9 @@ import { getEmployeeAIInsights } from "../../services/api";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
 import {
     faArrowLeft,
     faPen,
@@ -26,14 +29,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 
-function cleanAIResponse(text) {
+// function cleanAIResponse(text) {
 
-    if (!text) {
-        return "";
-    }
+//     if (!text) {
+//         return "";
+//     }
 
-    return text.replace(/\*\*/g, "").trim();
-}
+//     return text.replace(/\*\*/g, "").trim();
+// }
 
 
 function EmployeeDetailsComponent() {
@@ -108,7 +111,7 @@ function EmployeeDetailsComponent() {
             );
 
             setAiInsights(
-                cleanAIResponse(response.insights)
+                response.insights
             );
 
         } catch (error) {
@@ -420,7 +423,9 @@ function EmployeeDetailsComponent() {
 
                         <div className="employee-ai-response-content">
 
-                            {aiInsights}
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                {aiInsights}
+                            </ReactMarkdown>
 
                         </div>
 

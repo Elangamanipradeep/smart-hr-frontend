@@ -146,12 +146,13 @@ api.interceptors.response.use(
 
 );
 
-export const askAI = async (question) => {
+export const askAI = async (question, history = []) => {
 
     const response = await api.post(
         "ai/ask/",
         {
             question,
+            history,
         }
     );
 

@@ -808,3 +808,39 @@
     }
 
 }
+
+.message-content p {
+    margin: 0 0 10px;
+}
+
+.message-content p:last-child {
+    margin-bottom: 0;
+}
+
+.message-content strong {
+    font-weight: 700;
+}
+
+.message-content ul,
+.message-content ol {
+    margin: 8px 0;
+    padding-left: 22px;
+}
+
+.message-content li {
+    margin-bottom: 5px;
+}
+
+.message-content h1,
+.message-content h2,
+.message-content h3 {
+    margin: 10px 0 8px;
+    font-weight: 700;
+}
+
+.message-content code {
+    padding: 2px 5px;
+    border-radius: 4px;
+    background: #f1f5f9;
+    font-size: 12px;
+}

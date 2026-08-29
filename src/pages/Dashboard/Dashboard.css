@@ -1122,3 +1122,25 @@
 
     font-size: 13px;
 }
+
+.ai-insights-content p {
+    margin: 0 0 10px;
+}
+
+.ai-insights-content p:last-child {
+    margin-bottom: 0;
+}
+
+.ai-insights-content ul,
+.ai-insights-content ol {
+    margin: 8px 0;
+    padding-left: 22px;
+}
+
+.ai-insights-content li {
+    margin-bottom: 5px;
+}
+
+.ai-insights-content strong {
+    font-weight: 700;
+}

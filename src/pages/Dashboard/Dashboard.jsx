@@ -24,16 +24,17 @@ import EmployeeStatusChart from "../../components/Dashboard/EmployeeStatusChart"
 import DepartmentChart from "../../components/Dashboard/DepartmentChart";
 
 import "./Dashboard.css";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
+// function cleanAIResponse(text) {
 
-function cleanAIResponse(text) {
+//     if (!text) {
+//         return "";
+//     }
 
-    if (!text) {
-        return "";
-    }
-
-    return text.replace(/\*\*/g, "").trim();
-}
+//     return text.replace(/\*\*/g, "").trim();
+// }
 
 function Dashboard() {
 
@@ -85,7 +86,7 @@ function Dashboard() {
             const response = await getHRInsights();
 
             setAiInsights(
-                cleanAIResponse(response.insights)
+                response.insights
             );
 
         } catch (error) {
@@ -575,7 +576,9 @@ function Dashboard() {
 
                         <div className="ai-insights-content">
 
-                            {aiInsights}
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                {aiInsights}
+                            </ReactMarkdown>
 
                         </div>
 

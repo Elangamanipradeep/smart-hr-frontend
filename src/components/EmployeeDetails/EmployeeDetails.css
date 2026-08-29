@@ -809,3 +809,25 @@
     }
 
 }
+
+.employee-ai-response-content p {
+    margin: 0 0 10px;
+}
+
+.employee-ai-response-content p:last-child {
+    margin-bottom: 0;
+}
+
+.employee-ai-response-content ul,
+.employee-ai-response-content ol {
+    margin: 8px 0;
+    padding-left: 22px;
+}
+
+.employee-ai-response-content li {
+    margin-bottom: 5px;
+}
+
+.employee-ai-response-content strong {
+    font-weight: 700;
+}

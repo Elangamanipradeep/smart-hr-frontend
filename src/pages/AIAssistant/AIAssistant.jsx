@@ -1,15 +1,19 @@
 import { useState, useRef, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
 import { askAI } from "../../services/api";
+
 import "./AIAssistant.css";
 
-function cleanAIResponse(text) {
+// function cleanAIResponse(text) {
 
-    if (!text) {
-        return "";
-    }
+//     if (!text) {
+//         return "";
+//     }
 
-    return text.replace(/\*\*/g, "").trim();
-}
+//     return text.replace(/\*\*/g, "").trim();
+// }
 
 function AIAssistant() {
 
@@ -39,7 +43,15 @@ function AIAssistant() {
             return;
         }
 
-        // Add user message
+        const previousMessages = messages
+            .slice(-10)
+            .map((message) => ({
+                role: message.role,
+                content: message.content,
+            }));
+
+
+        // Add user message to UI
         setMessages((previousMessages) => [
             ...previousMessages,
             {
@@ -53,25 +65,34 @@ function AIAssistant() {
 
         try {
 
-            const data = await askAI(userQuestion);
+            const data = await askAI(
+                userQuestion,
+                previousMessages
+            );
 
             setMessages((previousMessages) => [
                 ...previousMessages,
                 {
                     role: "assistant",
-                    content: cleanAIResponse(data.answer)
+                    content: data.answer
                 }
             ]);
 
         } catch (error) {
 
-            console.error("AI Assistant Error:", error);
+            console.error(
+                "AI Assistant Error:",
+                error
+            );
 
             let errorMessage =
                 "Unable to get a response from the AI Assistant.";
 
             if (error.response?.data?.error) {
-                errorMessage = error.response.data.error;
+
+                errorMessage =
+                    error.response.data.error;
+
             }
 
             setMessages((previousMessages) => [
@@ -88,7 +109,9 @@ function AIAssistant() {
             setLoading(false);
 
             setTimeout(() => {
+
                 textareaRef.current?.focus();
+
             }, 100);
 
         }
@@ -307,7 +330,19 @@ function AIAssistant() {
                                     </div>
 
                                     <div className="message-content">
-                                        {message.content}
+
+                                        {message.role === "assistant" ? (
+
+                                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                                {message.content}
+                                            </ReactMarkdown>
+
+                                        ) : (
+
+                                            message.content
+
+                                        )}
+
                                     </div>
 
                                 </div>
