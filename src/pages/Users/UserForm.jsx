@@ -714,13 +714,13 @@ function UserForm() {
 
                             <div className="user-status-setting">
 
-                                <div className="user-status-setting-icon">
+                                {/* <div className="user-status-setting-icon">
 
                                     <FontAwesomeIcon
                                         icon={faToggleOn}
                                     />
 
-                                </div>
+                                </div> */}
 
 
                                 <div className="user-status-setting-content">
