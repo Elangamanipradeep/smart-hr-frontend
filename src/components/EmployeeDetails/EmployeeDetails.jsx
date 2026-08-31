@@ -148,28 +148,24 @@ function EmployeeDetailsComponent() {
 
         return (
 
-            <DashboardLayout>
+            <div className="details-loading-state">
 
-                <div className="details-loading-state">
+                <div
+                    className="spinner-border text-primary"
+                    role="status"
+                >
 
-                    <div
-                        className="spinner-border text-primary"
-                        role="status"
-                    >
-
-                        <span className="visually-hidden">
-                            Loading...
-                        </span>
-
-                    </div>
-
-                    <p>
-                        Loading employee details...
-                    </p>
+                    <span className="visually-hidden">
+                        Loading...
+                    </span>
 
                 </div>
 
-            </DashboardLayout>
+                <p>
+                    Loading employee details...
+                </p>
+
+            </div>
 
         );
 
@@ -179,51 +175,47 @@ function EmployeeDetailsComponent() {
 
         return (
 
-            <DashboardLayout>
+            <div className="details-error-state">
 
-                <div className="details-error-state">
+                <div className="details-error-icon">
 
-                    <div className="details-error-icon">
-
-                        <i className="fa-solid fa-triangle-exclamation"></i>
-
-                    </div>
-
-                    <h4>
-                        Unable to Load Employee
-                    </h4>
-
-                    <p>
-                        Something went wrong while loading the employee details.
-                    </p>
-
-                    <div className="d-flex justify-content-center gap-2">
-
-                        <button
-                            className="btn btn-primary"
-                            onClick={loadEmployee}
-                        >
-
-                            <i className="fa-solid fa-rotate-right me-2"></i>
-
-                            Try Again
-
-                        </button>
-
-                        <button
-                            className="btn btn-outline-secondary"
-                            onClick={() => navigate("/employees")}
-                        >
-
-                            Back to Employees
-
-                        </button>
-
-                    </div>
+                    <i className="fa-solid fa-triangle-exclamation"></i>
 
                 </div>
 
-            </DashboardLayout>
+                <h4>
+                    Unable to Load Employee
+                </h4>
+
+                <p>
+                    Something went wrong while loading the employee details.
+                </p>
+
+                <div className="d-flex justify-content-center gap-2">
+
+                    <button
+                        className="btn btn-primary"
+                        onClick={loadEmployee}
+                    >
+
+                        <i className="fa-solid fa-rotate-right me-2"></i>
+
+                        Try Again
+
+                    </button>
+
+                    <button
+                        className="btn btn-outline-secondary"
+                        onClick={() => navigate("/employees")}
+                    >
+
+                        Back to Employees
+
+                    </button>
+
+                </div>
+
+            </div>
 
         );
 
